@@ -19,32 +19,42 @@ class DatabaseSeeder extends Seeder
         // Roles
         Role::firstOrCreate(['name' => Role::ROLE_EDITOR]);
         $role_admin = Role::firstOrCreate(['name' => Role::ROLE_ADMIN]);
+        $role_user = Role::firstOrCreate(['name' => Role::ROLE_USER]);
 
         // MediaLibrary
         MediaLibrary::firstOrCreate([]);
 
         // Users
-        $user = User::firstOrCreate(
-            ['email' => 'darthvader@deathstar.ds'],
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@gmail.com'],
             [
-                'name' => 'anakin',
-                'password' => Hash::make('4nak1n'),
+                'name' => 'Admin',
+                'password' => Hash::make('malaquena'),
                 'email_verified_at' => now()
             ]
         );
 
-        $user->roles()->sync([$role_admin->id]);
+        $user = User::firstOrCreate(
+            ['email' => 'bertho@gmail.com'],
+            [
+                'name' => 'Bertho',
+                'password' => Hash::make('malaquena'),
+                'email_verified_at' => now()
+            ]
+        );
+
+        $admin->roles()->sync([$role_admin->id]);
+        $user->roles()->sync([$role_user->id]);
 
         // Posts
         $post = Post::firstOrCreate(
             [
                 'title' => 'Hello World',
-                'author_id' => $user->id
+                'author_id' => $admin->id
             ],
             [
                 'posted_at' => now(),
-                'content' => "
-                    Welcome to Laravel-blog !<br><br>
+                'content' => "Welcome to Laravel-blog !<br><br>
                     Don't forget to read the README before starting.<br><br>
                     Feel free to add a star on Laravel-blog on Github !<br><br>
                     You can open an issue or (better) a PR if something went wrong."
@@ -54,7 +64,7 @@ class DatabaseSeeder extends Seeder
         // Comments
         Comment::firstOrCreate(
             [
-                'author_id' => $user->id,
+                'author_id' => $admin->id,
                 'post_id' => $post->id
             ],
             [
