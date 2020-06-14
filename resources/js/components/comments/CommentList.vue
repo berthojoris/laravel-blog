@@ -51,7 +51,8 @@ export default {
     return {
       comments: [],
       isLoading: false,
-      endpoint: `/api/v1/posts/${this.postId}/comments/`
+      endpoint: `/api/v1/posts/${this.postId}/comments/`,
+      commentcount: `/api/v1/posts/${this.postId}/commentcount`
     }
   },
 
@@ -76,11 +77,18 @@ export default {
     },
 
     addComment (comment) {
+      // console.log(this.getCommentCount(comment.post_id))
       this.comments.unshift(comment)
     },
 
     removeComment ({ id }) {
       this.comments.splice(this.comments.findIndex(comment => comment.id === id), 1)
+    },
+
+    getCommentCount ({ id }) {
+      axios.get(this.commentcount).then(({ data }) => {
+        console.log(data)
+      })
     }
   }
 }
