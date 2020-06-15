@@ -178,7 +178,6 @@ return [
         App\Providers\TelescopeServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\BladeServiceProvider::class,
-        App\Providers\HorizonServiceProvider::class,
         App\Providers\ObserverServiceProvider::class,
 
     ],
